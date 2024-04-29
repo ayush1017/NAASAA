@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Nasa.css">
+
+    <title>NASA Space Exploration</title>
+</head>
+<style>
+@media only screen and (max-width: 13500px) {
+    body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-image: url("https://wallpapers.com/images/hd/4k-space-asteroid-widescreen-hge1jdvpr1cb86b2.jpg"); */
+    background-image: url('https://wallpapercave.com/wp/wp3837744.jpg');
+    background-repeat: repeat;
+    background-size: cover;
+
+   
+    
+    
+}
+#main_container{
+    margin-left: 20%;
+    margin-right: 20%;
+   
+
+}
+#date{
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 10px;
+
+}
+.butt{
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: linear-gradient(to top, #09203f 0%, #537895 100%);
+    color: beige;
+    cursor: pointer;
+    align-items: center;
+    margin-left: 30px;
+
+}
+.img{
+    border-radius: 50%;
+    height: 150px;
+    position: sticky;
+    top: 20px;
+  
+}
+    
+}
+   
+
+    
+</style>
+<body>
+    <span>
+        <img  class="img" src="https://seeklogo.com/images/N/nasa-logo-1CB08F1EC9-seeklogo.com.png" />
+    </span>
+    
+    <form id="form">
+        
+        <input type="date" id="date" placeholder="YYYY-MM-DD"/><br><br>
+        <button class="butt" onclick="func()">Generate Info</button>
+    </form>
+    <div id="main_container">
+    
+    </div>
+    
+</body>
+<script>
+   const date=document.getElementById('date');
+   const maincontainer=document.getElementById('main_container');
+   const image=document.getElementById('2');
+   const date1=new Date();
+   const year=date1.getFullYear();
+   const month=date1.getMonth()+1;
+   const date2=date1.getDate();
+   var audio=new Audio("C:/Users/Ayush Singh/Downloads'One small step for man'_ Moment of Neil Armstrong's famous line.mp3")
+
+   const func=()=>{
+    getfunc()
+    audio.play()
+
+   }
+   const getfunc= async()=>{
+    event.preventDefault();
+    
+    const date_data=date.value;
+    if(!date_data){
+        alert("Something goes wrong while fetching");
+    }
+    try{
+        const data=await fetch(`/NasaWorld?date=${date_data}`)
+        const response=await data.json()
+        maincontainer.innerHTML='';
+        // if(date_data==`${date2}-${month}-${year}`){
+        //     const h1=document.createElement('h1');
+        // h1.textContent=response.title;
+        // maincontainer.appendChild(h1);
+
+        // const div1=document.createElement('div');
+        // div1.textContent=response.date;
+        // maincontainer.appendChild(div1);
+
+
+        // const div=document.createElement('div');
+        // div.textContent=response.explanation;
+        // maincontainer.appendChild(div);
+        
+        // const image=document.createElement('img');
+        // image.setAttribute("src",response.url)
+        // image.style
+        // maincontainer.appendChild(image);
+
+        // }
+        // else{
+            const h1=document.createElement('h1');
+        h1.textContent=response.title;
+        h1.style.textAlign="center";
+        h1.style.color="white";
+        maincontainer.appendChild(h1);
+
+        const div1=document.createElement('div');
+        div1.textContent=response.date;
+        div1.style.textAlign="center";
+        div1.style.marginBottom="5%";
+        div1.style.color="white";
+        maincontainer.appendChild(div1);
+
+
+        const div=document.createElement('div');
+        div.textContent=response.explanation;
+        div.style.color="white";
+        div.style.paddingBottom="10%";
+        div.style.fontSize="17px"
+        maincontainer.appendChild(div);
+        
+        const image=document.createElement('img');
+        image.setAttribute("src",response.url)
+        image.style.height="40%";
+        image.style.width="40%";
+        image.style.marginLeft="30%";
+        image.style.border=" solid white"
+        maincontainer.appendChild(image);
+
+        
+
+        
+
+       
+         
+
+        
+    }catch(err){
+        alert("Can't FInd Info");
+    }   
+}
+
+</script>
+</html>
